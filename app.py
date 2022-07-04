@@ -83,33 +83,10 @@ class removeGarbage(Resource) :
                             "Quantidade" : count} )
 
 
-class getPrensa(Resource) :
-    def post(self) :
-            try : 
-                data = request.get_json()
-                tema = data["tema"]
-                pesquisa= data["pesquisa"]            
-                number_of_pages = data["numero_de_paginas"]
-
-                data = datetime.date(datetime.today())
-                df =create_dataframe_prensa(pesquisa,number_of_pages)
-                df["tema_principal"] = tema
-
-                df =dtProcessamento_option(df)
-                df_to_gcs("portifolio-arthur",f"std-raw/scrappy/P-{tema}/{pesquisa}/data-collect-{number_of_pages}-{data}.parquet",df)
-                result = "Sucesso"
-                quantidade = df.shape[0]
-            except :
-                result = "Fracasso"
-                quantidade = -1
-
-            return jsonify({"result": result ,
-                        "Quantidade" : quantidade})
 
 api.add_resource(getTheHackerNews, '/postTheHackerNews')
 api.add_resource(getGoogleNews, '/getGoogleNews')
 api.add_resource(removeGarbage, '/garbageRemove')
-api.add_resource(getPrensa, '/getPrensa')
 
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port='8080', debug=True)
