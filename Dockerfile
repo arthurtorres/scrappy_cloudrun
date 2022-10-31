@@ -1,5 +1,5 @@
 #Deriving the latest base image
-FROM python:latest
+FROM python:3.7
 WORKDIR src
 
 COPY requirements.txt requirements.txt

@@ -18,7 +18,6 @@ RESOURCES
 
 class getTheHackerNews(Resource):
     def post(self):
-        print("HERE THN")
         try :
 
             # Get posted data from request
